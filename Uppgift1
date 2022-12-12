@@ -20,22 +20,27 @@ function my_first_filter(src, dest) {
         for (let x = 0; x < width; x = x + 1) {
             if((x < width/2) && (y < height/2)){
                 keep_aspect_ratio;
-                dest[y][x][0] = 255 - src[y][x][0];// invert red intensity //creates green
                 
+                dest[y][x][2] = 255 - src[y][x][2];// invert blue intensity //creates yellow
+            }
                 
-            }else if ((x>width/2) && (y< height/2)){
+            else if ((x>width/2) && (y< height/2)){
                 dest[y][x][1] = 255 - src[y][x][1];// invert green intensity //creates red
             }
             else if ((x<width/2) && (y> height/2)){
-                dest[y][x][2] = 255 - src[y][x][2];// invert blue intensity //creates yellow
+                dest[y][x][0] = 255 - src[y][x][0];// invert red intensity //creates green
+            
             }
-            //dest[y][x][0] = 255 - src[y][x][0]; 
-             
             else
             {
+                dest[y][x][0] = 255 - src[y][x][0];
+                dest[y][x][1] = 255 - src[y][x][1];
                
+               
+                   // always 255 
             }
-            dest[y][x][3] = 255;    // always 255 
+            dest[y][x][3] = 255;
+            
             //let p = set_rgba();
         //red: 170
         //green 107
@@ -49,5 +54,4 @@ install_filter(my_first_filter);
 set_dimensions(WIDTH, HEIGHT);
 keep_aspect_ratio(true);
 set_fps(FPS);
-start();
 start();

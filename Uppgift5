@@ -1,0 +1,94 @@
+//Maja Nyberg och Eric Buxton
+
+// TASK 5
+
+const WIDTH = 400;
+const HEIGHT = 300;
+const FPS = 15;
+
+/**
+ * Vertically flips an image.
+ * @param {array} src - contains the source image
+ * @param {array} dest - array where the flipped source image is copied into
+ */
+function flip_vertically(src, dest) {
+    const width = image_width();
+    const height = image_height();
+
+    for (let i = 0; i < height; i = i + 1) {
+        for (let j = 0; j < width; j = j + 1) {
+            for (let k = 0; k < 4; k = k + 1) {
+                dest[i][j][k] = src[height - 1 - i][j][k];
+            }
+        }
+    }
+}
+
+/**
+ * Inverts the colors of an image.
+ * @param {array} src - contains the source image
+ * @param {array} dest - array where the color-inverted source image is copied into
+ */
+function color_invert(src, dest) {
+    const width = image_width();
+    const height = image_height();
+
+    for (let i = 0; i < height; i = i + 1){
+        for (let j = 0; j < width; j = j + 1){
+            for (let c = 0; c < 4; c = c + 1) {
+                dest[i][j][c] = c < 3 ? 255 - src[i][j][c] : src[i][j][c];
+            }
+        }
+    }
+}
+
+/**
+ * Creates an image with given dimensions with each pixel having maximal intensity
+ * of red, green and blue.
+ * @param {number} width - width of the image to be generated
+ * @param {number} height - height of the image to be generated
+ * @returns {array} Returns a 3 dimensional array representing the image
+ */
+function make_image(width, height) {
+    const img = [];
+    for (let i = 0; i < height; i = i + 1) {
+        const row = [];
+        img[i] = row;
+        for (let j = 0; j < width; j = j + 1) {
+            const pixel = [];
+            row[j] = pixel;
+            for (let z = 0; z < 4; z = z + 1) {
+                pixel[z] = 255;
+            }
+        }
+    }
+    return img;
+}
+
+/**
+ * Applies two filters to an image
+ * @param [function] filter1 - filter to apply
+ * @param {function} filter2 - filter to apply
+ * @returns [function] Returns a function that applies the filters.
+ */
+function compose(filter1, filter2) {
+    // your program goes here
+    const width = image_width();
+    const height = image_height();
+    
+    const temp = make_image(width, height);
+    return (src, dest)=>{
+        filter1(src, temp);
+        filter2(temp, dest);
+
+    };
+}
+
+     
+
+install_filter(compose( flip_vertically, color_invert));
+
+set_dimensions(WIDTH, HEIGHT);
+keep_aspect_ratio(true);
+set_fps(FPS);
+start();

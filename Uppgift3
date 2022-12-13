@@ -1,0 +1,46 @@
+//Maja Nyberg och Eric Buxton
+
+// TASK 3
+
+const WIDTH = 400;
+const HEIGHT = 300;
+const FPS = 15;
+
+/**
+ * Zooms in to the middle by a provided factor
+ * @param [number] factor - the factor of which the image will be zoomed by
+ * @returns {function} Returns a function that applies to the image.
+ */
+function zoom(factor) {
+    // your solution here
+    return (src, dest) => {
+        
+        const height = image_height();
+        const width = image_width();
+        
+        const scaled_height = height/factor;
+        const scaled_width = width/factor;
+     
+        
+        for (let i = 0; i < height; i = i + 1) {
+            for (let j = 0; j < width; j = j + 1) {
+                    
+                dest[i][j][0] = src[math_floor((i+scaled_height)/factor)]
+                    [math_floor((j+scaled_width)/factor)][0];
+                dest[i][j][1] = src[math_floor((i+scaled_height)/factor)]
+                    [math_floor((j+scaled_width)/factor)][1];
+                dest[i][j][2] = src[math_floor((i+scaled_height)/factor)]
+                    [math_floor((j+scaled_width)/factor)][2];
+                dest[i][j][3] = src[math_floor((i+scaled_height)/factor)]
+                    [math_floor((j+scaled_width)/factor)][3];
+            }
+        }
+    };
+}
+
+install_filter(zoom(2));
+
+set_dimensions(WIDTH, HEIGHT);
+keep_aspect_ratio(true);
+set_fps(FPS);
+start();
